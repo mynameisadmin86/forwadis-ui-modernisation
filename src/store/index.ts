@@ -1,17 +1,15 @@
 
 import { configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
-import { tasksApi } from './api/tasksApi';
-import { usersApi } from './api/usersApi';
+import { baseApi } from './api/baseApi';
 import uiReducer from './slices/uiSlice';
 import authReducer from './slices/authSlice';
 import tasksReducer from './slices/tasksSlice';
 
 export const store = configureStore({
   reducer: {
-    // API reducers
-    [tasksApi.reducerPath]: tasksApi.reducer,
-    [usersApi.reducerPath]: usersApi.reducer,
+    // API reducer (single base API)
+    [baseApi.reducerPath]: baseApi.reducer,
     
     // Local state reducers
     ui: uiReducer,
@@ -27,8 +25,7 @@ export const store = configureStore({
         ],
       },
     })
-      .concat(tasksApi.middleware)
-      .concat(usersApi.middleware),
+      .concat(baseApi.middleware), // Only add base API middleware once
 });
 
 setupListeners(store.dispatch);
@@ -38,7 +35,7 @@ export type AppDispatch = typeof store.dispatch;
 
 // Console logging for debugging
 console.log('🏪 Redux store initialized with middleware:', {
-  apis: [tasksApi.reducerPath, usersApi.reducerPath],
+  api: baseApi.reducerPath,
   slices: ['ui', 'auth', 'tasks'],
   timestamp: new Date().toISOString(),
 });
