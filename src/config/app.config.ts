@@ -1,13 +1,13 @@
 
 export const APP_CONFIG = {
   app: {
-    name: 'TaskFlow Pro',
+    name: 'Logistics',
     version: '1.0.0',
-    description: 'Professional Task Management Application',
+    description: 'Professional Logistics Management Application',
   },
   api: {
     baseUrl: process.env.NODE_ENV === 'production' 
-      ? 'https://api.taskflow.com' 
+      ? 'https://api.logistics.com' 
       : 'http://localhost:3001',
     timeout: 10000,
     retryAttempts: 3,
@@ -20,31 +20,34 @@ export const APP_CONFIG = {
   },
   storage: {
     keys: {
-      user: 'taskflow_user',
-      preferences: 'taskflow_preferences',
-      theme: 'taskflow_theme',
+      user: 'logistics_user',
+      preferences: 'logistics_preferences',
+      theme: 'logistics_theme',
     },
   },
 } as const;
 
-export const TASK_STATUS = {
-  TODO: 'todo',
-  IN_PROGRESS: 'in_progress',
-  REVIEW: 'review',
-  COMPLETED: 'completed',
+export const TRIP_STATUS = {
+  RELEASED: 'released',
+  UNDER_EXECUTION: 'under_execution',
+  INITIATED: 'initiated',
+  CANCELLED: 'cancelled',
+  DELETED: 'deleted',
+  CONFIRMED: 'confirmed',
 } as const;
 
-export const TASK_PRIORITY = {
-  LOW: 'low',
-  MEDIUM: 'medium',
-  HIGH: 'high',
-  URGENT: 'urgent',
+export const TRIP_BILLING_STATUS = {
+  DRAFT_BILL_RAISED: 'draft_bill_raised',
+  NOT_ELIGIBLE: 'not_eligible',
+  REVENUE_LEAKAGE: 'revenue_leakage',
+  INVOICE_CREATED: 'invoice_created',
+  INVOICE_APPROVED: 'invoice_approved',
 } as const;
 
 export const ROUTES = {
   HOME: '/',
   DASHBOARD: '/dashboard',
-  TASKS: '/tasks',
+  TRIP_EXECUTION: '/trip-execution',
   ANALYTICS: '/analytics',
   SETTINGS: '/settings',
 } as const;

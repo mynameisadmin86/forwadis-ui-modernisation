@@ -6,8 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ReduxProvider } from "./providers/ReduxProvider";
 import { ErrorBoundary } from "./components/molecules/ErrorBoundary/ErrorBoundary";
-import Index from "./pages/Index";
-import Dashboard from "./pages/Dashboard";
+import TripExecutionManagement from "./pages/TripExecutionManagement";
 import NotFound from "./pages/NotFound";
 import { ROUTES } from "./config/app.config";
 
@@ -42,8 +41,9 @@ const App = () => {
             <Sonner />
             <BrowserRouter>
               <Routes>
-                <Route path={ROUTES.HOME} element={<Index />} />
-                <Route path={ROUTES.DASHBOARD} element={<Dashboard />} />
+                <Route path={ROUTES.HOME} element={<TripExecutionManagement />} />
+                <Route path={ROUTES.DASHBOARD} element={<TripExecutionManagement />} />
+                <Route path="/trip-execution" element={<TripExecutionManagement />} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />
               </Routes>
