@@ -1,47 +1,47 @@
 
 import React, { useState } from 'react';
-import { ErrorBoundary } from '../components/molecules/ErrorBoundary/ErrorBoundary';
-import { TripPlansTable } from '../components/organisms/TripPlansTable/TripPlansTable';
-import { SearchFilterBar } from '../components/molecules/SearchFilterBar/SearchFilterBar';
 import { AppLayout } from '../components/AppLayout';
 import { Breadcrumb } from '../components/Breadcrumb';
+import { TripPlansTable } from '../components/organisms/TripPlansTable/TripPlansTable';
+import { SearchFilterBar } from '../components/molecules/SearchFilterBar/SearchFilterBar';
 import { useTripPlans } from '../hooks/useTripPlans';
 
-const TripExecutionManagement: React.FC = () => {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
-  const [selectedRows, setSelectedRows] = useState<string[]>([]);
-  const [showAdvancedFilters, setShowAdvancedFilters] = useState(false);
-  
+export const TripExecutionManagement: React.FC = () => {
   const { tripPlans, loading, error } = useTripPlans();
+  const [selectedRows, setSelectedRows] = useState<string[]>([]);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filters, setFilters] = useState<string[]>([]);
 
   const breadcrumbItems = [
-    { label: 'Home', href: '/', active: false },
+    { label: 'Home', href: '/' },
     { label: 'Trip Execution Management', active: true }
   ];
 
-  console.log('🚛 Trip Execution Management page rendered');
+  const handleRowSelectionChange = (selectedIds: string[]) => {
+    setSelectedRows(selectedIds);
+  };
+
+  const handleSearch = (query: string) => {
+    setSearchQuery(query);
+  };
+
+  const handleFiltersChange = (newFilters: string[]) => {
+    setFilters(newFilters);
+  };
 
   return (
-    <ErrorBoundary>
-      <AppLayout>
+    <AppLayout>
+      <div className="space-y-6">
         <Breadcrumb items={breadcrumbItems} />
-
-        <div className="flex items-center justify-between mb-6">
-          <div className="flex items-center gap-3">
-            <h1 className="text-xl font-semibold">Trip Plans</h1>
-            <span className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">9</span>
-          </div>
+        
+        <div className="flex justify-between items-center">
+          <h1 className="text-2xl font-bold text-gray-900">Trip Execution Management</h1>
         </div>
 
         <SearchFilterBar
-          searchQuery={searchQuery}
-          onSearchChange={setSearchQuery}
-          selectedFilters={selectedFilters}
-          onFiltersChange={setSelectedFilters}
-          showAdvancedFilters={showAdvancedFilters}
-          onToggleAdvancedFilters={setShowAdvancedFilters}
-          selectedRowsCount={selectedRows.length}
+          onSearch={handleSearch}
+          onFiltersChange={handleFiltersChange}
+          searchPlaceholder="Search by Trip Plan No, Customer, Resources..."
         />
 
         <TripPlansTable
@@ -49,13 +49,11 @@ const TripExecutionManagement: React.FC = () => {
           loading={loading}
           error={error}
           selectedRows={selectedRows}
-          onRowSelectionChange={setSelectedRows}
+          onRowSelectionChange={handleRowSelectionChange}
           searchQuery={searchQuery}
-          filters={selectedFilters}
+          filters={filters}
         />
-      </AppLayout>
-    </ErrorBoundary>
+      </div>
+    </AppLayout>
   );
 };
-
-export default TripExecutionManagement;
