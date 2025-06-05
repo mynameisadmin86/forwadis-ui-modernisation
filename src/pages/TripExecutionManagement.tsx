@@ -6,11 +6,12 @@ import { TripPlansTable } from '../components/organisms/TripPlansTable/TripPlans
 import { SearchFilterBar } from '../components/molecules/SearchFilterBar/SearchFilterBar';
 import { useTripPlans } from '../hooks/useTripPlans';
 
-export const TripExecutionManagement: React.FC = () => {
+const TripExecutionManagement: React.FC = () => {
   const { tripPlans, loading, error } = useTripPlans();
   const [selectedRows, setSelectedRows] = useState<string[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [filters, setFilters] = useState<string[]>([]);
+  const [showAdvancedFilters, setShowAdvancedFilters] = useState(false);
 
   const breadcrumbItems = [
     { label: 'Home', href: '/' },
@@ -21,12 +22,16 @@ export const TripExecutionManagement: React.FC = () => {
     setSelectedRows(selectedIds);
   };
 
-  const handleSearch = (query: string) => {
+  const handleSearchChange = (query: string) => {
     setSearchQuery(query);
   };
 
   const handleFiltersChange = (newFilters: string[]) => {
     setFilters(newFilters);
+  };
+
+  const handleToggleAdvancedFilters = (show: boolean) => {
+    setShowAdvancedFilters(show);
   };
 
   return (
@@ -39,9 +44,13 @@ export const TripExecutionManagement: React.FC = () => {
         </div>
 
         <SearchFilterBar
-          onSearch={handleSearch}
+          searchQuery={searchQuery}
+          onSearchChange={handleSearchChange}
+          selectedFilters={filters}
           onFiltersChange={handleFiltersChange}
-          searchPlaceholder="Search by Trip Plan No, Customer, Resources..."
+          showAdvancedFilters={showAdvancedFilters}
+          onToggleAdvancedFilters={handleToggleAdvancedFilters}
+          selectedRowsCount={selectedRows.length}
         />
 
         <TripPlansTable
@@ -57,3 +66,5 @@ export const TripExecutionManagement: React.FC = () => {
     </AppLayout>
   );
 };
+
+export default TripExecutionManagement;

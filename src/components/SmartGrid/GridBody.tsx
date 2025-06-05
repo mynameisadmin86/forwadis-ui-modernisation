@@ -1,7 +1,6 @@
 
 import React from 'react';
 import { GridColumn } from '../../types/smartGrid';
-import { Checkbox } from '../ui/checkbox';
 import { EditableCell } from './EditableCell';
 
 interface GridBodyProps<T> {
@@ -64,9 +63,11 @@ export function GridBody<T>({
           return (
             <tr key={rowKey} className="hover:bg-gray-50">
               <td className="px-4 py-3">
-                <Checkbox
+                <input
+                  type="checkbox"
                   checked={selectedRows.includes(rowKey)}
-                  onCheckedChange={(checked) => onSelectRow(rowKey, checked as boolean)}
+                  onChange={(e) => onSelectRow(rowKey, e.target.checked)}
+                  className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                 />
               </td>
               <td className="px-4 py-3" colSpan={columns.length}>
@@ -97,9 +98,11 @@ export function GridBody<T>({
         return (
           <tr key={rowKey} className="hover:bg-gray-50 border-b border-gray-200 last:border-b-0">
             <td className="px-4 py-3">
-              <Checkbox
+              <input
+                type="checkbox"
                 checked={selectedRows.includes(rowKey)}
-                onCheckedChange={(checked) => onSelectRow(rowKey, checked as boolean)}
+                onChange={(e) => onSelectRow(rowKey, e.target.checked)}
+                className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
               />
             </td>
             {columns.map((column) => (

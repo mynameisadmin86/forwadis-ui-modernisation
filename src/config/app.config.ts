@@ -5,8 +5,12 @@ export const APP_CONFIG = {
     version: '1.0.0',
   },
   api: {
-    baseUrl: process.env.VITE_API_BASE_URL || 'http://localhost:3000/api',
+    baseUrl: import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000/api',
     timeout: 10000,
+  },
+  ui: {
+    debounceDelay: 300,
+    itemsPerPage: 10,
   },
   features: {
     enableAdvancedFilters: true,
@@ -18,6 +22,12 @@ export const APP_CONFIG = {
     pageSizeOptions: [10, 25, 50, 100],
   },
 };
+
+export const ROUTES = {
+  HOME: '/',
+  DASHBOARD: '/dashboard',
+  TRIP_EXECUTION: '/trip-execution',
+} as const;
 
 export const TASK_STATUS = {
   TODO: 'todo',

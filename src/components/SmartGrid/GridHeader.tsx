@@ -1,7 +1,6 @@
 
 import React, { useState } from 'react';
 import { GridColumn, GridPreferences } from '../../types/smartGrid';
-import { Checkbox } from '../ui/checkbox';
 import { Button } from '../ui/button';
 import { ChevronUp, ChevronDown, GripVertical } from 'lucide-react';
 
@@ -55,10 +54,14 @@ export function GridHeader<T>({
     <thead className="bg-gray-50">
       <tr>
         <th className="w-12 px-4 py-3">
-          <Checkbox
+          <input
+            type="checkbox"
             checked={selectedAll}
-            indeterminate={indeterminate}
-            onCheckedChange={onSelectAll}
+            ref={(input) => {
+              if (input) input.indeterminate = indeterminate;
+            }}
+            onChange={(e) => onSelectAll(e.target.checked)}
+            className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
           />
         </th>
         {columns.map((column) => {
